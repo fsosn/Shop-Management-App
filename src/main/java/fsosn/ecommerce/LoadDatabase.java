@@ -10,17 +10,45 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.IntStream;
 
 @Configuration
-class LoadDatabase {
+public class LoadDatabase {
 
     private static final Logger log = LoggerFactory.getLogger(LoadDatabase.class);
+    private final int numOfOrders = 100;
+
+    private Status getRandomStatus() {
+        Random random = new Random();
+        Status[] statuses = Status.values();
+        return statuses[random.nextInt(statuses.length)];
+    }
+
+    private LocalDate getRandomDate() {
+        long minDay = LocalDate.of(2020, 1, 1).toEpochDay();
+        long maxDay = LocalDate.of(2023, 10, 31).toEpochDay();
+        long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+        return LocalDate.ofEpochDay(randomDay);
+    }
+
+    private List<Order> generateDatabase(int numOfOrders) {
+        return IntStream.rangeClosed(1, numOfOrders)
+                .mapToObj(i -> new Order(
+                        getRandomStatus(),
+                        new Random().nextLong(),
+                        getRandomDate(),
+                        "product"
+                )).toList();
+    }
 
     @Bean
     CommandLineRunner initDatabase(OrderRepository repository) {
 
         return args -> {
-            log.info("Preloading " + repository.save(new Order(Status.CANCELLED, 1L, LocalDate.parse("2019-08-16"), "aaa")));
+            log.info("Preloading " + repository.saveAll(generateDatabase(this.numOfOrders)));
         };
     }
 }

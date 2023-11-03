@@ -34,13 +34,22 @@ public class OrderController {
         return assembler.toModel(order);
     }
 
-    @GetMapping("${api.orders.get}")
+    @GetMapping("${api.orders.get}/all")
     public CollectionModel<EntityModel<Order>> getAllOrders() {
         List<EntityModel<Order>> orders = orderService.getAllOrders().stream()
                 .map(assembler::toModel)
                 .collect(Collectors.toList());
 
         return CollectionModel.of(orders, linkTo(methodOn(OrderController.class).getAllOrders()).withSelfRel());
+    }
+
+    @GetMapping("${api.orders.get}")
+    public CollectionModel<EntityModel<Order>> getOrders(@RequestParam int page, @RequestParam int size) {
+        List<EntityModel<Order>> orders = orderService.getAllOrders(page, size).stream()
+                .map(order -> assembler.toModel(order, page, size))
+                .collect(Collectors.toList());
+
+        return CollectionModel.of(orders, linkTo(methodOn(OrderController.class).getOrders(page, size)).withSelfRel());
     }
 
     @PostMapping("${api.orders.create}")

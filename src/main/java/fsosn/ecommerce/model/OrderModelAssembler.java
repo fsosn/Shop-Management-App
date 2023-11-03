@@ -1,7 +1,6 @@
 package fsosn.ecommerce.model;
 
 import fsosn.ecommerce.controller.OrderController;
-import fsosn.ecommerce.model.Order;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
@@ -16,8 +15,15 @@ public class OrderModelAssembler implements RepresentationModelAssembler<Order, 
     @Override
     public @NotNull EntityModel<Order> toModel(@NotNull Order order) {
 
-        return EntityModel.of(order, //
+        return EntityModel.of(order,
                 linkTo(methodOn(OrderController.class).getOrderById(order.getId())).withSelfRel(),
                 linkTo(methodOn(OrderController.class).getAllOrders()).withRel("orders"));
+    }
+
+    public @NotNull EntityModel<Order> toModel(@NotNull Order order, int page, int size) {
+
+        return EntityModel.of(order,
+                linkTo(methodOn(OrderController.class).getOrderById(order.getId())).withSelfRel(),
+                linkTo(methodOn(OrderController.class).getOrders(page, size)).withRel("orders"));
     }
 }

@@ -30,7 +30,10 @@ public class Order {
     public Order() {
     }
 
-    public Order(Status status, Long customerId, LocalDate orderDate, String description) {
+    public Order(Status status,
+                 Long customerId,
+                 LocalDate orderDate,
+                 String description) {
         this.status = status;
         this.customerId = customerId;
         this.orderDate = orderDate;

@@ -1,22 +1,30 @@
-package fsosn.ecommerce.model;
+package fsosn.ecommerce.order.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import fsosn.ecommerce.product.model.Product;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "CUSTOMER_ORDER")
+@Table(name = "orders")
 public class Order {
 
     private @Id
-    @GeneratedValue Long id;
+    @SequenceGenerator(
+            name = "orders_sequence",
+            sequenceName = "orders_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "orders_sequence"
+    )
+    Long id;
     @NotNull(message = "Status cannot be null.")
     private Status status;
     @NotNull(message = "Customer ID cannot be null.")
@@ -24,8 +32,10 @@ public class Order {
     @NotNull(message = "Order date cannot be null.")
     @Past(message = "Order date must be in the past.")
     private LocalDate orderDate;
-    @NotBlank(message = "Description cannot be blank.")
-    private String description;
+    @NotBlank(message = "Address cannot be blank.")
+    private String address;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Product> productList;
 
     public Order() {
     }
@@ -33,11 +43,12 @@ public class Order {
     public Order(Status status,
                  Long customerId,
                  LocalDate orderDate,
-                 String description) {
+                 String address, List<Product> productList) {
         this.status = status;
         this.customerId = customerId;
         this.orderDate = orderDate;
-        this.description = description;
+        this.address = address;
+        this.productList = productList;
     }
 
     public Long getId() {
@@ -72,12 +83,20 @@ public class Order {
         this.orderDate = orderDate;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAddress() {
+        return address;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAddress(String description) {
+        this.address = description;
+    }
+
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 
     @Override
@@ -85,12 +104,12 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return Objects.equals(id, order.id) && status == order.status && Objects.equals(customerId, order.customerId) && Objects.equals(orderDate, order.orderDate) && Objects.equals(description, order.description);
+        return Objects.equals(id, order.id) && status == order.status && Objects.equals(customerId, order.customerId) && Objects.equals(orderDate, order.orderDate) && Objects.equals(address, order.address) && Objects.equals(productList, order.productList);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, status, customerId, orderDate, description);
+        return Objects.hash(id, status, customerId, orderDate, address, productList);
     }
 
     @Override
@@ -99,8 +118,9 @@ public class Order {
                 "id=" + id +
                 ", status=" + status +
                 ", customerId=" + customerId +
-                ", orderDateTime=" + orderDate +
-                ", description='" + description + '\'' +
+                ", orderDate=" + orderDate +
+                ", address='" + address + '\'' +
+                ", productList=" + productList +
                 '}';
     }
 }

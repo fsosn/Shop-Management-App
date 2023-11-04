@@ -1,8 +1,8 @@
-package fsosn.ecommerce.controller;
+package fsosn.ecommerce.order.controller;
 
-import fsosn.ecommerce.model.Order;
-import fsosn.ecommerce.model.OrderModelAssembler;
-import fsosn.ecommerce.service.OrderService;
+import fsosn.ecommerce.order.model.Order;
+import fsosn.ecommerce.order.model.OrderModelAssembler;
+import fsosn.ecommerce.order.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;

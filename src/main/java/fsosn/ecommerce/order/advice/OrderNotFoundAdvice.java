@@ -1,6 +1,6 @@
-package fsosn.ecommerce.advice;
+package fsosn.ecommerce.order.advice;
 
-import fsosn.ecommerce.exception.OrderNotFoundException;
+import fsosn.ecommerce.order.exception.OrderNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

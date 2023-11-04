@@ -1,8 +1,9 @@
-package fsosn.ecommerce.service;
+package fsosn.ecommerce.order.service;
 
-import fsosn.ecommerce.exception.OrderNotFoundException;
-import fsosn.ecommerce.model.Order;
-import fsosn.ecommerce.repository.OrderRepository;
+import fsosn.ecommerce.order.exception.OrderNotFoundException;
+import fsosn.ecommerce.order.model.Order;
+import fsosn.ecommerce.order.repository.OrderRepository;
+import fsosn.ecommerce.product.model.Product;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -36,6 +37,11 @@ public class OrderService {
         return orderRepository.findAll(pr);
     }
 
+    public List<Product> getProductListById(Long id) {
+        validateId(id);
+        return orderRepository.getOrderProductListById(id);
+    }
+
     public Order createOrder(@Valid Order order) {
         return orderRepository.save(order);
     }
@@ -48,7 +54,8 @@ public class OrderService {
                     order.setStatus(updatedOrder.getStatus());
                     order.setCustomerId(updatedOrder.getCustomerId());
                     order.setOrderDate(updatedOrder.getOrderDate());
-                    order.setDescription(updatedOrder.getDescription());
+                    order.setAddress(updatedOrder.getAddress());
+                    order.setProductList(updatedOrder.getProductList());
                     return orderRepository.save(order);
                 })
                 .orElseThrow(() -> new OrderNotFoundException(id));

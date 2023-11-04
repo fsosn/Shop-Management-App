@@ -1,4 +1,4 @@
-package fsosn.ecommerce.exception;
+package fsosn.ecommerce.order.exception;
 
 public class OrderNotFoundException extends RuntimeException {
 

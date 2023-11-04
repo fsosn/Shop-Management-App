@@ -1,6 +1,6 @@
-package fsosn.ecommerce.model;
+package fsosn.ecommerce.order.model;
 
-import fsosn.ecommerce.controller.OrderController;
+import fsosn.ecommerce.order.controller.OrderController;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;

@@ -1,4 +1,4 @@
-package fsosn.ecommerce.advice;
+package fsosn.ecommerce.order.advice;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -99,6 +99,14 @@ public class Order {
         this.productList = productList;
     }
 
+    public void addProductToList(Product product){
+        this.productList.add(product);
+    }
+
+    public void removeProductById(Long productId) {
+        productList.removeIf(product -> Objects.equals(product.getId(), productId));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

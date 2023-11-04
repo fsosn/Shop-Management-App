@@ -72,6 +72,26 @@ public class OrderController {
                 .body(entityModel);
     }
 
+    @PutMapping("${api.orders.update}/{orderId}/add-product")
+    public ResponseEntity<?> addProductToOrder(@PathVariable Long orderId, @RequestBody Long productId) {
+        Order updatedOrder = orderService.addProductToOrder(orderId, productId);
+        EntityModel<Order> entityModel = assembler.toModel(updatedOrder);
+
+        return ResponseEntity
+                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .body(entityModel);
+    }
+
+    @PutMapping("${api.orders.update}/{orderId}/remove-product")
+    public ResponseEntity<?> removeProductFromOrder(@PathVariable Long orderId, @RequestBody Long productId) {
+        Order updatedOrder = orderService.removeProductFromOrder(orderId, productId);
+        EntityModel<Order> entityModel = assembler.toModel(updatedOrder);
+
+        return ResponseEntity
+                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
+                .body(entityModel);
+    }
+
     @DeleteMapping("${api.orders.delete}/{id}")
     public ResponseEntity<?> deleteOrder(@PathVariable Long id) {
         orderService.deleteOrder(id);

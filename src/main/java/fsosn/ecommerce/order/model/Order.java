@@ -25,7 +25,7 @@ public class Order {
             generator = "orders_sequence"
     )
     Long id;
-    @NotNull(message = "Status cannot be null.")
+    @Enumerated(EnumType.STRING)
     private Status status;
     @NotNull(message = "Customer ID cannot be null.")
     private Long customerId;
@@ -34,7 +34,12 @@ public class Order {
     private LocalDate orderDate;
     @NotBlank(message = "Address cannot be blank.")
     private String address;
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany
+    @JoinTable(
+            name = "order_products",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
     private List<Product> productList;
 
     public Order() {
@@ -99,7 +104,7 @@ public class Order {
         this.productList = productList;
     }
 
-    public void addProductToList(Product product){
+    public void addProductToList(Product product) {
         this.productList.add(product);
     }
 

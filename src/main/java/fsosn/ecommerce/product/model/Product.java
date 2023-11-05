@@ -19,7 +19,7 @@ public class Product {
             generator = "products_sequence"
     )
     Long id;
-
+    @Column(unique = true)
     private String title;
     private String description;
     private BigDecimal price;

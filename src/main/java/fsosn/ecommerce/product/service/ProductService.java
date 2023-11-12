@@ -19,7 +19,6 @@ public class ProductService {
     }
 
     public Product getProductById(Long id) {
-        validateId(id);
         return productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException(id));
     }
@@ -39,7 +38,6 @@ public class ProductService {
 
     @Transactional
     public Product updateProduct(Long id, Product updatedProduct) {
-        validateId(id);
         return productRepository.findById(id)
                 .map(product -> {
                     product.setTitle(updatedProduct.getTitle());
@@ -51,17 +49,10 @@ public class ProductService {
     }
 
     public void deleteProduct(Long id) {
-        validateId(id);
         productRepository.findById(id).ifPresentOrElse(
                 productRepository::delete, () -> {
                     throw new ProductNotFoundException(id);
                 }
         );
-    }
-
-    private void validateId(Long id) {
-        if (id == null) {
-            throw new IllegalArgumentException("Product ID cannot be null.");
-        }
     }
 }

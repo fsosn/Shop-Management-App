@@ -95,10 +95,13 @@ public class OrderService {
     }
 
     public void deleteOrder(Long id) {
-        orderRepository.findById(id).ifPresentOrElse(
-                orderRepository::delete, () -> {
-                    throw new OrderNotFoundException(id);
-                }
-        );
+        Order order = orderRepository.findById(id).orElse(null);
+        if (order != null) {
+            order.getProductList().clear();
+            orderRepository.delete(order);
+        }
+        else{
+            throw new OrderNotFoundException(id);
+        }
     }
 }

@@ -34,7 +34,7 @@ public class Order {
     private LocalDate orderDate;
     @NotBlank(message = "Address cannot be blank.")
     private String address;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "order_products",
             joinColumns = @JoinColumn(name = "order_id"),

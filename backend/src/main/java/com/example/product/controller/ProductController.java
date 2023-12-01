@@ -18,7 +18,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("${api.products.basepath}")
-@CrossOrigin(origins = "${host.frontend}", allowCredentials = "true")
+@CrossOrigin(origins = {"${host.frontend}", "${host.mobile}"}, allowCredentials = "true")
 public class ProductController {
 
     private final ProductService productService;

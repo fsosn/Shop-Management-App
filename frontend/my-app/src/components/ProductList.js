@@ -5,11 +5,19 @@ import '../css/styles.css'
 const ProductList = () => {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
+    const token = localStorage.getItem('jwtToken');
 
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/products/get/all', {
+                const response = await fetch(
+                    process.env.REACT_APP_HOST +
+                    process.env.REACT_APP_API_PRODUCTS_BASEPATH +
+                    process.env.REACT_APP_GET_ALL, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
                     credentials: 'include',
                 });
 
@@ -33,9 +41,18 @@ const ProductList = () => {
 
     const handleDeleteClick = async (productId) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/products/delete?id=${productId}`, {
+            const token = localStorage.getItem('jwtToken');
+            const response = await fetch(
+                process.env.REACT_APP_HOST +
+                process.env.REACT_APP_API_PRODUCTS_BASEPATH +
+                process.env.REACT_APP_DELETE +
+                '?id=' + productId, {
                 method: 'DELETE',
-                credentials: 'include',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include'
             });
 
             if (response.ok) {

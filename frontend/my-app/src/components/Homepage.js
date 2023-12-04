@@ -1,9 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const HomePage = () => {
-    const navigate = useNavigate();
-
     return (
         <div className="container">
             <div className="row justify-content-center">
@@ -13,9 +11,13 @@ const HomePage = () => {
                             <h3>Shop management platform</h3>
                         </div>
                         <div className="card-body">
-                            <button onClick={() => navigate('/products')} className="btn btn-primary btn-block">
+                            <Link to="/products" className="btn btn-primary btn-block">
                                 Products
-                            </button>
+                            </Link>
+                            <br/>
+                            <Link to="/logout" className="btn btn-danger btn-block">
+                                Log Out
+                            </Link>
                         </div>
                     </div>
                 </div>

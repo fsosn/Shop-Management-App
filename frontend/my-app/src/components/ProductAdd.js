@@ -8,6 +8,7 @@ const ProductAdd = () => {
         description: '',
         price: '',
     });
+    const token = localStorage.getItem('jwtToken');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -18,17 +19,21 @@ const ProductAdd = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:8080/api/products/create', {
+            const response = await fetch(
+                process.env.REACT_APP_HOST +
+                process.env.REACT_APP_API_PRODUCTS_BASEPATH +
+                process.env.REACT_APP_CREATE, {
                 method: 'POST',
                 headers: {
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
+                credentials: 'include',
                 body: JSON.stringify(product),
             });
 
             if (response.ok) {
                 console.log('Product added successfully');
-                // Redirect to the product list page after successful submission
                 navigate('/products');
             } else {
                 console.error('Error adding product');

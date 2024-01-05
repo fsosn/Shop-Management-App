@@ -68,9 +68,7 @@ public class ProductController {
         Product updatedOrder = productService.updateProduct(id, newProduct);
         EntityModel<Product> entityModel = assembler.toModel(updatedOrder);
 
-        return ResponseEntity
-                .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
-                .body(entityModel);
+        return ResponseEntity.ok(entityModel);
     }
 
     @DeleteMapping("${api.products.delete}")

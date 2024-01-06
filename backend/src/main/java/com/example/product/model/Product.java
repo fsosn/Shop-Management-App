@@ -32,6 +32,8 @@ public class Product {
 
     private BigDecimal price;
 
+    private Integer stock;
+
     @JoinColumn(name = "user_id")
     private Long userId;
 }

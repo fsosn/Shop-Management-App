@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useCookies} from "react-cookie";
 
 const ProductAdd = () => {
     const navigate = useNavigate();
@@ -7,30 +8,55 @@ const ProductAdd = () => {
         title: '',
         description: '',
         price: '',
+        stock: ''
     });
-    const token = localStorage.getItem('jwtToken');
+    const [cookies] = useCookies(['jwtToken']);
+    const token = cookies.jwtToken;
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setProduct((prevProduct) => ({ ...prevProduct, [name]: value }));
+        const {name, value} = e.target;
+        if (name === 'price' && !/^\d*\.?\d*$/.test(value)) {
+            return;
+        }
+        setProduct((prevProduct) => ({...prevProduct, [name]: value}));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!product.title.trim()) {
+            console.error('Title cannot be empty.');
+            return;
+        }
+        if (!product.description.trim()) {
+            console.error('Description cannot be empty.');
+            return;
+        }
+
+        const stock = parseInt(product.stock, 10);
+        if (isNaN(stock) || stock < 0) {
+            console.error('Stock must be a non-negative number');
+            return;
+        }
+
+        if (product.price <= 0) {
+            console.error('Price cannot be 0 or negative.');
+            return;
+        }
 
         try {
             const response = await fetch(
                 process.env.REACT_APP_HOST +
                 process.env.REACT_APP_API_PRODUCTS_BASEPATH +
                 process.env.REACT_APP_CREATE, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'include',
-                body: JSON.stringify(product),
-            });
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(product),
+                });
 
             if (response.ok) {
                 console.log('Product added successfully');
@@ -44,18 +70,18 @@ const ProductAdd = () => {
     };
 
     return (
-        <div className="container">
+        <div className="container-fluid">
             <div className="row justify-content-center">
-                <div className="col-sm-6">
+                <div className="col-sm-5">
                     <div className="card">
                         <div className="card-header bg-info text-center text-white">
                             <h3>Add Product</h3>
                         </div>
                         <div className="card-body">
                             <form onSubmit={handleSubmit}>
-                                <div className="form-group row">
-                                    <label htmlFor="title" className="col-sm-3 col-form-label text-right">
-                                        <b>Title</b>
+                                <div className="form-group row padding-bottom-12">
+                                    <label htmlFor="title" className="col-sm-3 col-form-label text-right form-font">
+                                        Title
                                     </label>
                                     <div className="col-sm-9">
                                         <input
@@ -68,9 +94,9 @@ const ProductAdd = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="form-group row">
-                                    <label htmlFor="description" className="col-sm-3 col-form-label text-right">
-                                        <b>Description</b>
+                                <div className="form-group row padding-bottom-12">
+                                    <label htmlFor="description" className="col-sm-3 col-form-label text-right form-font">
+                                        Description
                                     </label>
                                     <div className="col-sm-9">
                                         <input
@@ -83,9 +109,9 @@ const ProductAdd = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="form-group row">
-                                    <label htmlFor="price" className="col-sm-3 col-form-label text-right">
-                                        <b>Price</b>
+                                <div className="form-group row padding-bottom-12">
+                                    <label htmlFor="price" className="col-sm-3 col-form-label text-right form-font">
+                                        Price
                                     </label>
                                     <div className="col-sm-9">
                                         <input
@@ -98,17 +124,34 @@ const ProductAdd = () => {
                                         />
                                     </div>
                                 </div>
+                                <div className="form-group row padding-bottom-12">
+                                    <label htmlFor="stock" className="col-sm-3 col-form-label text-right form-font">
+                                        Stock
+                                    </label>
+                                    <div className="col-sm-9">
+                                        <input
+                                            type="number"
+                                            name="stock"
+                                            id="stock"
+                                            value={product.stock}
+                                            onChange={handleChange}
+                                            className="form-control"
+                                        />
+                                    </div>
+                                </div>
                                 <div className="form-group row justify-content-center">
-                                    <div className="col-sm-6 text-center">
-                                        <button type="submit" className="btn btn-success btn-block">
+                                    <div className="col-sm-4 text-center">
+                                        <button type="submit" className="btn btn-success btn-block"
+                                                style={{width: '100%'}}>
                                             Save
                                         </button>
                                     </div>
-                                    <div className="col-sm-6 text-center">
+                                    <div className="col-sm-4 text-center">
                                         <button
                                             type="button"
                                             onClick={() => navigate('/products')}
-                                            className="btn btn-primary btn-block"
+                                            className="btn btn-primary btn-block "
+                                            style={{width: '100%'}}
                                         >
                                             Go back
                                         </button>

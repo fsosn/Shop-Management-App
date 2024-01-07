@@ -1,12 +1,15 @@
 import React, {useEffect} from 'react';
 import {Navigate} from 'react-router-dom';
+import {useCookies} from "react-cookie";
 
 const Logout = ({onLogout}) => {
+    const [cookies, setCookie, removeCookie] = useCookies(['jwtToken']);
     useEffect(() => {
+        removeCookie('jwtToken');
+        localStorage.removeItem('userEmail');
         onLogout();
-        localStorage.removeItem('jwtToken');
+        console.log('Logout successful')
     }, [onLogout]);
-    console.log('Logout successful')
 
     return <Navigate to="/login"/>;
 };

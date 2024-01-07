@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import '../css/styles.css';
+import {useCookies} from 'react-cookie';
+import '../styles.css';
 
 const Login = ({onLogin}) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [password, setPassword] = useState();
+    const [cookies, setCookie] = useCookies(['jwtToken']);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -19,22 +21,26 @@ const Login = ({onLogin}) => {
             const response = await fetch(
                 process.env.REACT_APP_HOST +
                 process.env.REACT_APP_API_AUTH +
-                process.env.REACT_APP_AUTHENTICATE, {
+                process.env.REACT_APP_AUTHENTICATE,
+                {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(credentials),
                     credentials: 'include',
-                });
+                }
+            );
 
             if (response.ok) {
                 const data = await response.json();
                 const token = data.token;
+
+                setCookie('jwtToken', token, {path: '/', sameSite: 'strict'});
+                localStorage.setItem('userEmail', credentials.email);
                 console.log('Login successful for user: ' + credentials.email);
-                localStorage.setItem('jwtToken', token);
                 onLogin(token);
-                navigate('/');
+                navigate('/products');
             } else {
                 console.error('Error during login:', await response.text());
             }
@@ -44,7 +50,7 @@ const Login = ({onLogin}) => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="container">
             <div className="row justify-content-center">
                 <div className="col-sm-6">
                     <div className="card">
@@ -77,9 +83,10 @@ const Login = ({onLogin}) => {
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
                                 </div>
-                                <button type="submit" className="btn btn-success btn-block">
+                                <div className="text-center">
+                                <button type="submit" className="btn btn-success btn-block sign-button ">
                                     Sign In
-                                </button>
+                                </button></div>
                             </form>
                             <div className="mt-3 text-center">
                                 <p>Don't have an account? <a href="/register">Register</a></p>

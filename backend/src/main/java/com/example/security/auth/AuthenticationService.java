@@ -1,6 +1,7 @@
 package com.example.security.auth;
 
 import com.example.security.config.JwtService;
+import com.example.user.model.Provider;
 import com.example.user.model.Role;
 import com.example.user.model.User;
 import com.example.user.repository.UserRepository;
@@ -26,6 +27,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
+                .provider(Provider.LOCAL)
                 .build();
         userRepository.save(user);
         var token = jwtService.generateToken(user);

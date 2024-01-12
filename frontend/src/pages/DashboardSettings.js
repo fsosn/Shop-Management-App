@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import Settings from "../components/Settings";
 import "../styles.css";
-import {useThemeContext} from "../context/ThemeProvider";
 
 const DashboardSettings = () => {
     const [collapsed, setCollapsed] = useState(false);

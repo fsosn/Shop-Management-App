@@ -12,14 +12,14 @@ body {
 
 .container {
     height: 100dvh;
-    padding-right : 0 !important;
-    padding-left : 0 !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
 }
 
 .container-fluid {
     height: 100dvh;
-    padding-right : 0 !important;
-    padding-left : 0 !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
 }
 
 
@@ -30,9 +30,8 @@ body {
     left: 250px;
     top: 0;
     z-index: 999;
-    transition:
-            left 0.5s,
-            width 0.5s;
+    transition: left 0.5s,
+    width 0.5s;
 }
 
 .wrapper-max {
@@ -159,11 +158,7 @@ h3 {
     background-color: var(--bs-body-bg);
 }
 
-.sign-button {
-    width: 256px !important;
-}
-
-.button-width{
+.button-width {
     width: 160px;
 }
 
@@ -182,29 +177,103 @@ h3 {
     font-weight: bold;
 }
 
-.padding-top-24{
+.padding-top-24 {
     padding-top: 24px;
 }
 
-.padding-bottom-12{
+.padding-bottom-12 {
     padding-bottom: 12px;
 }
 
-.language-dropdown{
+.language-dropdown {
     width: 128px;
 }
 
-.settings-icon{
+.settings-icon {
     width: 24px;
 }
 
 .margin-right-16 {
     margin-right: 16px;
 }
+
 .margin-right-4 {
     margin-right: 4px;
 }
 
-.form-font{
+.form-font {
     font-size: 20px;
+}
+
+.hr-text {
+    border: 0;
+    line-height: 1em;
+    position: relative;
+    text-align: center;
+    height: 1.5em;
+    font-size: 16px;
+    margin: 30px 15px;
+}
+
+.hr-text::before {
+    content: "";
+    background: linear-gradient(to right, transparent, var(--bs-body-color), transparent);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 1px;
+}
+
+.hr-text::after {
+    content: attr(data-content);
+    position: relative;
+    padding: 0 7px;
+    line-height: 1.5em;
+    background-color: var(--bs-body-bg);
+}
+
+.form-header {
+    background-color: #883BD5;
+    color: white;
+    padding-top: 16px;
+}
+
+.padding-bottom-24 {
+    padding-bottom: 24px;
+}
+
+.sign-button {
+    background-color: #7752FE;
+    color: white;
+}
+
+.sign-button:hover {
+    background-color: #815efa;
+    color: white;
+}
+
+.form-label {
+    font-size: 20px;
+}
+
+.form-label-question {
+    font-size: 16px;
+}
+
+.padding-right-8 {
+    padding-right: 8px;
+}
+
+.sign-button-container {
+    padding-top: 16px;
+    padding-bottom: 8px;
+}
+
+.link-register {
+    color: #7773ee;
+}
+
+.link-register:hover {
+    color: #8380e7;
 }

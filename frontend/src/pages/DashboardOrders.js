@@ -1,12 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import "../styles.css";
-import {useThemeContext} from "../context/ThemeProvider";
 
 const DashboardOrders = () => {
     const [collapsed, setCollapsed] = useState(false);
-    const {setCurrentTheme} = useThemeContext();
 
     return (
         <div className="container-fluid">

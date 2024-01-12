@@ -48,7 +48,7 @@ const ProductEdit = () => {
             return;
         }
         setProduct((prevProduct) => ({...prevProduct, [name]: value}));
-        setValidationErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
+        setValidationErrors((prevErrors) => ({...prevErrors, [name]: ''}));
     };
 
     const handleSubmit = async (e) => {
@@ -123,11 +123,12 @@ const ProductEdit = () => {
                                         ID
                                     </label>
                                     <div className="col-sm-9">
-                                        <input type="text" value={product.id} readOnly className="form-control" />
+                                        <input type="text" value={product.id} readOnly className="form-control"/>
                                     </div>
                                 </div>
                                 <div className="form-group row">
-                                    <label htmlFor="title" className="col-sm-3 col-form-label text-right font-weight-bold">
+                                    <label htmlFor="title"
+                                           className="col-sm-3 col-form-label text-right font-weight-bold">
                                         Title
                                     </label>
                                     <div className="col-sm-9">
@@ -142,7 +143,8 @@ const ProductEdit = () => {
                                     </div>
                                 </div>
                                 <div className="form-group row">
-                                    <label htmlFor="description" className="col-sm-3 col-form-label text-right font-weight-bold">
+                                    <label htmlFor="description"
+                                           className="col-sm-3 col-form-label text-right font-weight-bold">
                                         Description
                                     </label>
                                     <div className="col-sm-9">
@@ -157,7 +159,8 @@ const ProductEdit = () => {
                                     </div>
                                 </div>
                                 <div className="form-group row">
-                                    <label htmlFor="price" className="col-sm-3 col-form-label text-right font-weight-bold">
+                                    <label htmlFor="price"
+                                           className="col-sm-3 col-form-label text-right font-weight-bold">
                                         Price
                                     </label>
                                     <div className="col-sm-9">
@@ -172,7 +175,8 @@ const ProductEdit = () => {
                                     </div>
                                 </div>
                                 <div className="form-group row">
-                                    <label htmlFor="stock" className="col-sm-3 col-form-label text-right font-weight-bold">
+                                    <label htmlFor="stock"
+                                           className="col-sm-3 col-form-label text-right font-weight-bold">
                                         Stock
                                     </label>
                                     <div className="col-sm-9">

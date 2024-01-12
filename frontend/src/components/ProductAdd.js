@@ -72,9 +72,9 @@ const ProductAdd = () => {
     return (
         <div className="container-fluid">
             <div className="row justify-content-center">
-                <div className="col-sm-5">
+                <div className="col-4">
                     <div className="card">
-                        <div className="card-header bg-info text-center text-white">
+                        <div className="card-header text-center form-header">
                             <h3>Add Product</h3>
                         </div>
                         <div className="card-body">
@@ -95,7 +95,8 @@ const ProductAdd = () => {
                                     </div>
                                 </div>
                                 <div className="form-group row padding-bottom-12">
-                                    <label htmlFor="description" className="col-sm-3 col-form-label text-right form-font">
+                                    <label htmlFor="description"
+                                           className="col-sm-3 col-form-label text-right form-font">
                                         Description
                                     </label>
                                     <div className="col-sm-9">
@@ -141,8 +142,8 @@ const ProductAdd = () => {
                                 </div>
                                 <div className="form-group row justify-content-center">
                                     <div className="col-sm-4 text-center">
-                                        <button type="submit" className="btn btn-success btn-block"
-                                                style={{width: '100%'}}>
+                                        <button type="submit"
+                                                className="btn btn-block btn-success d-grid gap-2 col-12 mx-auto">
                                             Save
                                         </button>
                                     </div>
@@ -150,8 +151,7 @@ const ProductAdd = () => {
                                         <button
                                             type="button"
                                             onClick={() => navigate('/products')}
-                                            className="btn btn-primary btn-block "
-                                            style={{width: '100%'}}
+                                            className="btn btn-block btn-primary d-grid gap-2 col-12 mx-auto"
                                         >
                                             Go back
                                         </button>

@@ -26,19 +26,19 @@ const ProductTable = () => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    setProducts(data._embedded.productList);
+                    setProducts(data._embedded?.productList || []);
                 } else {
                     console.error('Error fetching products. Server response:', await response.text());
                 }
             } catch (error) {
                 console.error('Error fetching products:', error);
             } finally {
-                setLoading(false); // Set loading to false regardless of success or failure
+                setLoading(false);
             }
         };
 
         void fetchProducts();
-    }, []);
+    }, [token]);
 
     const handleEditClick = (productId) => {
         navigate(`/products/edit?id=${productId}`);

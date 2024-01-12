@@ -2,12 +2,16 @@ import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useCookies} from 'react-cookie';
 import '../styles.css';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faGoogle} from "@fortawesome/free-brands-svg-icons/faGoogle";
+
 
 const Login = ({onLogin}) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState();
-    const [cookies, setCookie] = useCookies(['jwtToken']);
+    const [password, setPassword] = useState('');
+    const [, setCookie] = useCookies(['jwtToken']);
+
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -38,8 +42,7 @@ const Login = ({onLogin}) => {
 
                 setCookie('jwtToken', token, {path: '/', sameSite: 'strict'});
                 localStorage.setItem('userEmail', credentials.email);
-                console.log('Login successful for user: ' + credentials.email);
-                onLogin(token);
+                onLogin();
                 navigate('/products');
             } else {
                 console.error('Error during login:', await response.text());
@@ -50,11 +53,11 @@ const Login = ({onLogin}) => {
     };
 
     return (
-        <div className="container">
+        <div className="container mx-auto">
             <div className="row justify-content-center">
-                <div className="col-sm-6">
+                <div className="col-sm-5">
                     <div className="card">
-                        <div className="card-header bg-info text-center text-white">
+                        <div className="card-header form-header text-center">
                             <h3>Sign In</h3>
                         </div>
                         <div className="card-body">
@@ -83,13 +86,28 @@ const Login = ({onLogin}) => {
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
                                 </div>
-                                <div className="text-center">
-                                <button type="submit" className="btn btn-success btn-block sign-button ">
-                                    Sign In
-                                </button></div>
+                                <div className="text-center sign-button-container">
+                                    <button type="submit"
+                                            className="btn btn-block d-grid gap-2 col-6 mx-auto sign-button">
+                                        Sign in
+                                    </button>
+                                </div>
                             </form>
-                            <div className="mt-3 text-center">
-                                <p>Don't have an account? <a href="/register">Register</a></p>
+                            <div className="mt-3 text-center form-label-question">
+                                <p>Don't have an account? <a className="text-decoration-none link-register"
+                                                             href="/register">Register</a></p>
+                            </div>
+
+                            <hr className="hr-text gradient" data-content="or"/>
+
+                            <div className="d-flex justify-content-center padding-bottom-24">
+                                <div className="d-grid gap-2 col-6 mx-auto">
+                                    <a className="btn sign-button"
+                                       href={process.env.REACT_APP_HOST + process.env.REACT_APP_OAUTH_GOOGLE}>
+                                        <FontAwesomeIcon className="padding-right-8" icon={faGoogle}/> Sign in with
+                                        Google
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

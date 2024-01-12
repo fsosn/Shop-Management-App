@@ -44,11 +44,11 @@ const Register = () => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="container mx-auto">
             <div className="row justify-content-center">
-                <div className="col-sm-6">
+                <div className="col-sm-5">
                     <div className="card">
-                        <div className="card-header bg-info text-center text-white">
+                        <div className="card-header text-center form-header">
                             <h3>Register</h3>
                         </div>
                         <div className="card-body">
@@ -101,12 +101,16 @@ const Register = () => {
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
                                 </div>
-                                <button type="submit" className="btn btn-success btn-block">
-                                    Register
-                                </button>
+                                <div className="text-center sign-button-container">
+                                    <button type="submit"
+                                            className="btn btn-block d-grid gap-2 col-6 mx-auto sign-button">
+                                        Register
+                                    </button>
+                                </div>
                             </form>
-                            <div className="mt-3 text-center">
-                                <p>Already have an account? <a href="/login">Sign In</a></p>
+                            <div className="mt-3 text-center form-label-question">
+                                <p>Already have an account? <a className="text-decoration-none link-register"
+                                                               href="/login">Sign In</a></p>
                             </div>
                         </div>
                     </div>

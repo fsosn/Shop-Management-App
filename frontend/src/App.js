@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom';
+import {Routes, Route, Navigate, BrowserRouter} from 'react-router-dom';
 
 import ProductAdd from './components/ProductAdd';
 import ProductEdit from './components/ProductEdit';
@@ -11,6 +11,7 @@ import DashboardProducts from "./pages/DashboardProducts";
 import DashboardSettings from "./pages/DashboardSettings";
 import {ThemeProvider} from "./context/ThemeProvider";
 import DashboardOrders from "./pages/DashboardOrders";
+import HandleOauthSuccess from "./components/HandleOauthSuccess";
 
 const PrivateRoute = ({element, isAuthenticated}) => {
     return isAuthenticated ? element : <Navigate to="/login"/>;
@@ -47,7 +48,7 @@ const App = () => {
 
     return (
         <ThemeProvider>
-            <Router>
+            <BrowserRouter>
                 <Routes>
                     <Route path="/login" element={<Login onLogin={handleLogin}/>}/>
                     <Route path="/register" element={<Register/>}/>
@@ -75,15 +76,16 @@ const App = () => {
                         path="/"
                         element={
                             isAuthenticated ? (
-                                <Navigate to="/products" />
+                                <Navigate to="/products"/>
                             ) : (
-                                <Navigate to="/login" />
+                                <Navigate to="/login"/>
                             )
                         }
                     />
                     <Route path="/logout" element={<Logout onLogout={handleLogout}/>}/>
+                    <Route path="/oauth-successful-login" element={<HandleOauthSuccess onLogin={handleLogin}/>}/>
                 </Routes>
-            </Router>
+            </BrowserRouter>
         </ThemeProvider>
     );
 };

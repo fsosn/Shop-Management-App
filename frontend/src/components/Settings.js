@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faLanguage, faMoon, faSun} from "@fortawesome/free-solid-svg-icons";
+import {faLanguage, faMoon} from "@fortawesome/free-solid-svg-icons";
 import {useThemeContext} from "../context/ThemeProvider";
 import storage from "local-storage-fallback";
 

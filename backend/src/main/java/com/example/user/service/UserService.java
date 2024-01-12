@@ -17,12 +17,16 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public void processOAuthPostLogin(CustomOAuth2User oAuth2User) {
+    public User processOAuthPostLogin(CustomOAuth2User oAuth2User) {
 
         Optional<User> foundUser = userRepository.findByEmail(oAuth2User.getEmail());
 
-        if(foundUser.isPresent()){
-            throw new UserAlreadyRegisteredException(oAuth2User.getEmail());
+        if (foundUser.isPresent()) {
+            User existingUser = foundUser.get();
+            if (existingUser.getProvider() == Provider.GOOGLE) {
+                return existingUser;
+            }
+            throw new UserAlreadyRegisteredException(existingUser.getEmail());
         }
 
         User user = User.builder()
@@ -33,10 +37,6 @@ public class UserService {
                 .role(Role.USER)
                 .build();
 
-        userRepository.save(user);
-    }
-
-    public User getUserFromOAuthUser(CustomOAuth2User oAuth2User) {
-        return userRepository.findByEmail(oAuth2User.getEmail()).orElseThrow();
+        return userRepository.save(user);
     }
 }

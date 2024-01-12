@@ -37,9 +37,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
 
         try {
-            userService.processOAuthPostLogin(oauthUser);
-
-            User user = userService.getUserFromOAuthUser(oauthUser);
+            User user = userService.processOAuthPostLogin(oauthUser);
             String token = jwtService.generateToken(user);
             String email = user.getEmail();
 

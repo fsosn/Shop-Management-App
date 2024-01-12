@@ -1,6 +1,7 @@
 package com.example.security.auth;
 
 import com.example.security.config.JwtService;
+import com.example.user.exception.UserAlreadyRegisteredException;
 import com.example.user.model.Provider;
 import com.example.user.model.Role;
 import com.example.user.model.User;
@@ -21,6 +22,10 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new UserAlreadyRegisteredException(request.getEmail());
+        }
+
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())

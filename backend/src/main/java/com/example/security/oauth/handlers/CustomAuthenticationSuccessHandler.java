@@ -2,6 +2,7 @@ package com.example.security.oauth.handlers;
 
 import com.example.security.config.JwtService;
 import com.example.security.oauth.model.CustomOAuth2User;
+import com.example.user.exception.UserAlreadyRegisteredException;
 import com.example.user.model.User;
 import com.example.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,6 +26,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
     private String host;
     @Value("${frontend.successful-oauth}")
     private String oauthSuccess;
+    @Value("${frontend.login}")
+    private String loginPage;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
@@ -32,12 +35,17 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                                         Authentication authentication) throws IOException {
 
         CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
-        userService.processOAuthPostLogin(oauthUser);
 
-        User user = userService.getUserFromOAuthUser(oauthUser);
-        String token = jwtService.generateToken(user);
-        String email = user.getEmail();
+        try {
+            userService.processOAuthPostLogin(oauthUser);
 
-        response.sendRedirect(host + oauthSuccess + "?token=" + token + "&email=" + email);
+            User user = userService.getUserFromOAuthUser(oauthUser);
+            String token = jwtService.generateToken(user);
+            String email = user.getEmail();
+
+            response.sendRedirect(host + oauthSuccess + "?token=" + token + "&email=" + email);
+        } catch (UserAlreadyRegisteredException e) {
+            response.sendRedirect(host + loginPage);
+        }
     }
 }

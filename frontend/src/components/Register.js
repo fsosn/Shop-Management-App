@@ -7,9 +7,19 @@ const Register = () => {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [repeatPassword, setRepeatPassword] = useState('');
+    const [registrationError, setRegistrationError] = useState('');
+    const [repeatPasswordError, setRepeatPasswordError] = useState('');
 
     const handleRegister = async (e) => {
         e.preventDefault();
+
+        if (repeatPassword !== password) {
+            setRepeatPasswordError('Passwords do not match.');
+            return;
+        } else {
+            setRepeatPasswordError('');
+        }
 
         const userData = {
             firstName,
@@ -33,10 +43,14 @@ const Register = () => {
                 });
 
             if (response.ok) {
-                console.log('Registration successful');
                 navigate('/');
             } else {
-                console.error('Error during registration:', await response.text());
+                const errorResponse = await response.json();
+                if (response.status === 500) {
+                    setRegistrationError('Email is already taken.');
+                } else {
+                    console.error('Error during registration:', errorResponse);
+                }
             }
         } catch (error) {
             console.error('Error during registration:', error);
@@ -83,11 +97,16 @@ const Register = () => {
                                     </label>
                                     <input
                                         type="email"
-                                        className="form-control"
+                                        className={`form-control ${registrationError ? 'is-invalid' : ''}`}
                                         id="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
+                                    {registrationError && (
+                                        <div className="invalid-feedback form-label-extras">
+                                            {registrationError}
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="password" className="form-label">
@@ -101,6 +120,23 @@ const Register = () => {
                                         onChange={(e) => setPassword(e.target.value)}
                                     />
                                 </div>
+                                <div className="mb-3">
+                                    <label htmlFor="repeatPassword" className="form-label">
+                                        Confirm password:
+                                    </label>
+                                    <input
+                                        type="password"
+                                        className={`form-control ${repeatPasswordError ? 'is-invalid' : ''}`}
+                                        id="repeatPassword"
+                                        value={repeatPassword}
+                                        onChange={(e) => setRepeatPassword(e.target.value)}
+                                    />
+                                    {repeatPasswordError && (
+                                        <div className="invalid-feedback form-label-extras">
+                                            {repeatPasswordError}
+                                        </div>
+                                    )}
+                                </div>
                                 <div className="text-center sign-button-container">
                                     <button type="submit"
                                             className="btn btn-block d-grid gap-2 col-6 mx-auto sign-button">
@@ -108,7 +144,7 @@ const Register = () => {
                                     </button>
                                 </div>
                             </form>
-                            <div className="mt-3 text-center form-label-question">
+                            <div className="mt-3 text-center form-label-extras">
                                 <p>Already have an account? <a className="text-decoration-none link-register"
                                                                href="/login">Sign In</a></p>
                             </div>

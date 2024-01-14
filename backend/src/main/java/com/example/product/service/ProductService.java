@@ -7,6 +7,7 @@ import com.example.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,8 +41,8 @@ public class ProductService {
     }
 
     public Page<Product> getProducts(int page, int size) {
-        PageRequest pr = PageRequest.of(page, size);
-        return productRepository.findByUserId(getCurrentUserId(), pr);
+        Pageable pr = PageRequest.of(Math.max(page, 1) - 1, size);
+        return productRepository.findAllByUserId(getCurrentUserId(), pr);
     }
 
     public Product createProduct(Product product) {

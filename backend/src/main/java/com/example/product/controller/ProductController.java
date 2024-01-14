@@ -4,9 +4,11 @@ import com.example.product.model.Product;
 import com.example.product.model.ProductModelAssembler;
 import com.example.product.service.ProductService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,12 +47,22 @@ public class ProductController {
     }
 
     @GetMapping("${api.products.get}")
-    public CollectionModel<EntityModel<Product>> getProducts(@RequestParam int page, @RequestParam int size) {
-        List<EntityModel<Product>> products = productService.getProducts(page, size).stream()
+    public PagedModel<EntityModel<Product>> getProducts(@RequestParam int page, @RequestParam int size) {
+        Page<Product> productPage = productService.getProducts(page, size);
+
+        List<EntityModel<Product>> products = productPage.getContent().stream()
                 .map(product -> assembler.toModel(product, page, size))
                 .collect(Collectors.toList());
 
-        return CollectionModel.of(products, linkTo(methodOn(ProductController.class).getProducts(page, size)).withSelfRel());
+        PagedModel.PageMetadata metadata = new PagedModel.PageMetadata(
+                productPage.getSize(),
+                productPage.getNumber(),
+                productPage.getTotalElements(),
+                productPage.getTotalPages()
+        );
+
+        return PagedModel.of(products, metadata,
+                linkTo(methodOn(ProductController.class).getProducts(page, size)).withSelfRel());
     }
 
     @PostMapping("${api.products.create}")

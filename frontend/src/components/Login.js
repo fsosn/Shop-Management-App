@@ -94,7 +94,7 @@ const Login = ({onLogin}) => {
                                 </div>
                             </form>
                             <div className="mt-3 text-center form-label-extras">
-                                <p>Don't have an account? <a className="text-decoration-none link-register"
+                                <p>Don't have an account? <a className="text-decoration-none href-color"
                                                              href="/register">Register</a></p>
                             </div>
 

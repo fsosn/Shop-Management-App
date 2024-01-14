@@ -110,6 +110,22 @@ h3 {
     font-weight: bold;
 }
 
+.btn-success{
+    background-color: #945aff !important;
+    border-color: #773ae7 !important;
+}
+
+.btn-success:hover{
+    background-color: #8451e0 !important;
+    border-color: #773ae7 !important;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #aa8ef5;
+    color: #2d0c85;
+    border-color: #aa8ef5;
+}
+
 .icon {
     margin-right: 32px;
     width: 36px;
@@ -159,7 +175,7 @@ h3 {
 }
 
 .button-width {
-    width: 160px;
+    width: 100px;
 }
 
 .spacer-logout {
@@ -234,8 +250,8 @@ h3 {
 }
 
 .form-header {
-    background-color: #883BD5;
-    color: white;
+    background-color: #aa8ef5;
+    color: #2d0c85;
     padding-top: 16px;
 }
 
@@ -270,10 +286,10 @@ h3 {
     padding-bottom: 8px;
 }
 
-.link-register {
+.href-color {
     color: #7773ee;
 }
 
-.link-register:hover {
+.href-color:hover {
     color: #8380e7;
 }

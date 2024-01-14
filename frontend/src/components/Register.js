@@ -47,7 +47,7 @@ const Register = () => {
             } else {
                 const errorResponse = await response.json();
                 if (response.status === 500) {
-                    setRegistrationError('Email is already taken.');
+                    setRegistrationError('E-mail is already taken.');
                 } else {
                     console.error('Error during registration:', errorResponse);
                 }
@@ -145,7 +145,7 @@ const Register = () => {
                                 </div>
                             </form>
                             <div className="mt-3 text-center form-label-extras">
-                                <p>Already have an account? <a className="text-decoration-none link-register"
+                                <p>Already have an account? <a className="text-decoration-none href-color"
                                                                href="/login">Sign In</a></p>
                             </div>
                         </div>

@@ -8,7 +8,10 @@ const ProductTable = () => {
     const [products, setProducts] = useState([]);
     const [cookies] = useCookies(['jwtToken']);
     const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const token = cookies.jwtToken;
+    const pageSize = 1;
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -16,7 +19,10 @@ const ProductTable = () => {
                 const response = await fetch(
                     process.env.REACT_APP_HOST +
                     process.env.REACT_APP_API_PRODUCTS_BASEPATH +
-                    process.env.REACT_APP_GET_ALL, {
+                    process.env.REACT_APP_GET+
+                    '?page=' + `${currentPage}` +
+                    '&size=' + `${pageSize}`
+                    , {
                         headers: {
                             'Authorization': `Bearer ${token}`,
                             'Content-Type': 'application/json',
@@ -27,6 +33,7 @@ const ProductTable = () => {
                 if (response.ok) {
                     const data = await response.json();
                     setProducts(data._embedded?.productList || []);
+                    setTotalPages(data.page.totalPages)
                 } else {
                     console.error('Error fetching products. Server response:', await response.text());
                 }
@@ -38,7 +45,7 @@ const ProductTable = () => {
         };
 
         void fetchProducts();
-    }, [token]);
+    }, [token, currentPage]);
 
     const handleEditClick = (productId) => {
         navigate(`/products/edit?id=${productId}`);
@@ -144,6 +151,25 @@ const ProductTable = () => {
                                     ></i>{' '}
                                     Add
                                 </button>
+                                <nav aria-label="Pagination">
+                                    <ul className="pagination justify-content-center">
+                                        <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                                            <a className="page-link href-color"
+                                               onClick={() => setCurrentPage(currentPage - 1)}>&lsaquo;</a>
+                                        </li>
+                                        {[...Array(totalPages).keys()].map((page) => (
+                                            <li key={page + 1}
+                                                className={`page-item ${currentPage === page + 1 ? 'active' : ''}`}>
+                                                <a className="page-link href-color"
+                                                   onClick={() => setCurrentPage(page + 1)}>{page + 1}</a>
+                                            </li>
+                                        ))}
+                                        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                                            <a className="page-link href-color"
+                                               onClick={() => setCurrentPage(currentPage+1)}>&rsaquo;</a>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </>
                         )}
                     </div>

@@ -15,7 +15,7 @@ const ProductAdd = () => {
 
     const handleChange = (e) => {
         const {name, value} = e.target;
-        if (name === 'price' && !/^\d*\.?\d*$/.test(value)) {
+        if ((name === 'price' || name === 'stock') && !/^\d*\.?\d*$/.test(value)) {
             return;
         }
         setProduct((prevProduct) => ({...prevProduct, [name]: value}));
@@ -71,19 +71,19 @@ const ProductAdd = () => {
 
     return (
         <div className="container-fluid">
-            <div className="row justify-content-center">
-                <div className="col-4">
+            <div className="d-flex justify-content-center align-items-center vh-100">
+                <div className="col-auto">
                     <div className="card">
-                        <div className="card-header text-center form-header">
+                        <div className="card-header form-header text-center">
                             <h3>Add Product</h3>
                         </div>
                         <div className="card-body">
-                            <form onSubmit={handleSubmit}>
-                                <div className="form-group row padding-bottom-12">
-                                    <label htmlFor="title" className="col-sm-3 col-form-label text-right form-font">
+                            <form onSubmit={handleSubmit} className="form-font">
+                                <div className="row mb-3">
+                                    <label htmlFor="title" className="col col-form-label text-end form-font">
                                         Title
                                     </label>
-                                    <div className="col-sm-9">
+                                    <div className="col">
                                         <input
                                             type="text"
                                             name="title"
@@ -94,12 +94,11 @@ const ProductAdd = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="form-group row padding-bottom-12">
-                                    <label htmlFor="description"
-                                           className="col-sm-3 col-form-label text-right form-font">
+                                <div className="row mb-3">
+                                    <label htmlFor="description" className="col col-form-label text-end form-font">
                                         Description
                                     </label>
-                                    <div className="col-sm-9">
+                                    <div className="col">
                                         <input
                                             type="text"
                                             name="description"
@@ -110,11 +109,11 @@ const ProductAdd = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="form-group row padding-bottom-12">
-                                    <label htmlFor="price" className="col-sm-3 col-form-label text-right form-font">
+                                <div className="row mb-3">
+                                    <label htmlFor="price" className="col col-form-label text-end form-font">
                                         Price
                                     </label>
-                                    <div className="col-sm-9">
+                                    <div className="col">
                                         <input
                                             type="text"
                                             name="price"
@@ -125,13 +124,13 @@ const ProductAdd = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="form-group row padding-bottom-12">
-                                    <label htmlFor="stock" className="col-sm-3 col-form-label text-right form-font">
+                                <div className="row mb-4">
+                                    <label htmlFor="stock" className="col col-form-label text-end form-font">
                                         Stock
                                     </label>
-                                    <div className="col-sm-9">
+                                    <div className="col">
                                         <input
-                                            type="number"
+                                            type="text"
                                             name="stock"
                                             id="stock"
                                             value={product.stock}
@@ -140,18 +139,17 @@ const ProductAdd = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className="form-group row justify-content-center">
-                                    <div className="col-sm-4 text-center">
-                                        <button type="submit"
-                                                className="btn btn-block btn-success d-grid gap-2 col-12 mx-auto">
+                                <div className="row justify-content-center">
+                                    <div className="col text-end">
+                                        <button type="submit" className="btn btn-block btn-success button-width">
                                             Save
                                         </button>
                                     </div>
-                                    <div className="col-sm-4 text-center">
+                                    <div className="col">
                                         <button
                                             type="button"
                                             onClick={() => navigate('/products')}
-                                            className="btn btn-block btn-primary d-grid gap-2 col-12 mx-auto"
+                                            className="btn btn-block btn-primary button-width"
                                         >
                                             Go back
                                         </button>

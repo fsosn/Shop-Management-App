@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useCookies} from 'react-cookie';
 import '../styles.css'
+import {useTranslation} from "react-i18next";
 
 const ProductTable = () => {
     const navigate = useNavigate();
@@ -10,6 +11,7 @@ const ProductTable = () => {
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const {t} = useTranslation();
     const token = cookies.jwtToken;
     const pageSize = 1;
 
@@ -99,11 +101,11 @@ const ProductTable = () => {
                                         <thead>
                                         <tr className="bg-dark text-white">
                                             <th>ID</th>
-                                            <th>Title</th>
-                                            <th>Description</th>
-                                            <th>Price</th>
-                                            <th>Stock</th>
-                                            <th>Action</th>
+                                            <th>{t('title')}</th>
+                                            <th>{t('description')}</th>
+                                            <th>{t('price')}</th>
+                                            <th>{t('stock')}</th>
+                                            <th>{t('action')}</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -123,7 +125,7 @@ const ProductTable = () => {
                                                             className="fa fa-trash-o margin-right-4"
                                                             aria-hidden="true"
                                                         ></i>{' '}
-                                                        Delete
+                                                        {t('delete')}
                                                     </button>
                                                     <button
                                                         className="btn btn-warning margin-right-16"
@@ -133,7 +135,7 @@ const ProductTable = () => {
                                                             className="fa fa-pencil-square-o margin-right-4"
                                                             aria-hidden="true"
                                                         ></i>{' '}
-                                                        Edit
+                                                        {t('edit')}
                                                     </button>
                                                 </td>
                                             </tr>
@@ -149,7 +151,7 @@ const ProductTable = () => {
                                         className="fa fa-plus-square margin-right-4"
                                         aria-hidden="true"
                                     ></i>{' '}
-                                    Add
+                                    {t('add')}
                                 </button>
                                 <nav aria-label="Pagination">
                                     <ul className="pagination justify-content-center">

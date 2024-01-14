@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useCookies} from "react-cookie";
+import {useTranslation} from "react-i18next";
 
 const ProductAdd = () => {
     const navigate = useNavigate();
+    const {t} = useTranslation();
     const [product, setProduct] = useState({
         title: '',
         description: '',
@@ -75,13 +77,13 @@ const ProductAdd = () => {
                 <div className="col-auto">
                     <div className="card">
                         <div className="card-header form-header text-center">
-                            <h3>Add Product</h3>
+                            <h3>{t('addProduct')}</h3>
                         </div>
                         <div className="card-body">
                             <form onSubmit={handleSubmit} className="form-font">
                                 <div className="row mb-3">
                                     <label htmlFor="title" className="col col-form-label text-end form-font">
-                                        Title
+                                        {t('title')}
                                     </label>
                                     <div className="col">
                                         <input
@@ -96,7 +98,7 @@ const ProductAdd = () => {
                                 </div>
                                 <div className="row mb-3">
                                     <label htmlFor="description" className="col col-form-label text-end form-font">
-                                        Description
+                                        {t('description')}
                                     </label>
                                     <div className="col">
                                         <input
@@ -111,7 +113,7 @@ const ProductAdd = () => {
                                 </div>
                                 <div className="row mb-3">
                                     <label htmlFor="price" className="col col-form-label text-end form-font">
-                                        Price
+                                        {t('price')}
                                     </label>
                                     <div className="col">
                                         <input
@@ -126,7 +128,7 @@ const ProductAdd = () => {
                                 </div>
                                 <div className="row mb-4">
                                     <label htmlFor="stock" className="col col-form-label text-end form-font">
-                                        Stock
+                                        {t('stock')}
                                     </label>
                                     <div className="col">
                                         <input
@@ -142,7 +144,7 @@ const ProductAdd = () => {
                                 <div className="row justify-content-center">
                                     <div className="col text-end">
                                         <button type="submit" className="btn btn-block btn-success button-width">
-                                            Save
+                                            {t('save')}
                                         </button>
                                     </div>
                                     <div className="col">
@@ -151,7 +153,7 @@ const ProductAdd = () => {
                                             onClick={() => navigate('/products')}
                                             className="btn btn-block btn-primary button-width"
                                         >
-                                            Go back
+                                            {t('goBack')}
                                         </button>
                                     </div>
                                 </div>

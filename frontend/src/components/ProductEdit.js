@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useCookies} from "react-cookie";
+import {useTranslation} from "react-i18next";
 
 const ProductEdit = () => {
     const navigate = useNavigate();
+    const {t} = useTranslation();
     const queryParams = new URLSearchParams(window.location.search);
     const productId = queryParams.get('id');
     const [cookies] = useCookies(['jwtToken']);
@@ -114,7 +116,7 @@ const ProductEdit = () => {
                 <div className="col-auto">
                     <div className="card">
                         <div className="card-header form-header text-center">
-                            <h3>Edit Product</h3>
+                            <h3>{t('editProduct')}</h3>
                         </div>
                         <div className="card-body">
                             <form onSubmit={handleSubmit} className="form-font">
@@ -129,7 +131,7 @@ const ProductEdit = () => {
                                     </div>
                                     <div className="row mb-3">
                                         <label htmlFor="title" className="col col-form-label text-end font-weight-bold">
-                                            Title
+                                            {t('title')}
                                         </label>
                                         <div className="col">
                                             <input
@@ -144,7 +146,7 @@ const ProductEdit = () => {
                                     </div>
                                     <div className="row mb-3">
                                         <label htmlFor="description" className="col col-form-label text-end font-weight-bold">
-                                            Description
+                                            {t('description')}
                                         </label>
                                         <div className="col">
                                             <input
@@ -159,7 +161,7 @@ const ProductEdit = () => {
                                     </div>
                                     <div className="row mb-3">
                                         <label htmlFor="price" className="col col-form-label text-end font-weight-bold ">
-                                            Price
+                                            {t('price')}
                                         </label>
                                         <div className="col">
                                             <input
@@ -174,7 +176,7 @@ const ProductEdit = () => {
                                     </div>
                                     <div className="row mb-3">
                                         <label htmlFor="stock" className="col col-form-label text-end font-weight-bold">
-                                            Stock
+                                            {t('stock')}
                                         </label>
                                         <div className="col">
                                             <input
@@ -190,7 +192,7 @@ const ProductEdit = () => {
                                     <div className="row justify-content-center">
                                         <div className="col text-end">
                                             <button type="submit" className="btn btn-success btn-block">
-                                                Update
+                                                {t('update')}
                                             </button>
                                         </div>
                                         <div className="col">
@@ -199,7 +201,7 @@ const ProductEdit = () => {
                                                 onClick={() => navigate('/products')}
                                                 className="btn btn-primary btn-block"
                                             >
-                                                Go back
+                                                {t('goBack')}
                                             </button>
                                         </div>
                                     </div>
